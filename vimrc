@@ -23,14 +23,10 @@ set encoding=utf-8
 
 " Whitespace
 set nowrap
-set textwidth=79
+set textwidth=9000
 set formatoptions=tcqrn1
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set noexpandtab
 set noshiftround
-set autoindent
+set autoindent expandtab tabstop=2 shiftwidth=2
 set smartindent
 
 " Cursor motion
@@ -106,8 +102,8 @@ inoremap <F1> <ESC>:set invfullscreen<CR>a
 nnoremap <F1> :set invfullscreen<CR>
 vnoremap <F1> :set invfullscreen<CR>
 
-inoremap <F2> <ESC>:q<CR>
-inoremap <F3> <ESC>:w<CR>i
+inoremap <F2> <ESC>:q<CR>i
+inoremap <F3> <ESC>:w<CR>
 nnoremap <F3> <ESC>:w<CR>
 "inoremap <F4> <ESC>:wq<CR>
 nnoremap <F2> :q!<CR>
@@ -159,6 +155,7 @@ map <leader>l :set list!<CR> " Toggle tabs and EOL
 " Color scheme (terminal)
 
 au BufRead,BufNewFile haproxy* set ft=haproxy
+
 
 set t_Co=256
 set background=dark
