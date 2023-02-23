@@ -1,6 +1,7 @@
 - hosts: localhost
-  environment:
-    http_proxy: http://172.25.174.30:3128
+  vars:
+    proxy_env:
+      https_proxy: http://172.25.174.30:3128
   tasks:
     - name: install packages
       become: true
@@ -19,23 +20,26 @@
            - ncdu
            - bash-completion
            - make
-     
-    - name: Create a directory for VIM
+    - name: Create a directory for VIM 
       file:
         path: ~/.vim/colors/
         state: directory
         mode: '0755'
     - name: Download solarized.vim
-           become: yes
-           get_url:
-             url: https://raw.github.com/altercation/vim-colors-solarized/master/colors/solarized.vim
-             dest: ~/.vim/colors
-             use_proxy: yes
+      environment: "{{ proxy_env }}"
+      become: true
+      become_user: root
+      get_url:
+        url: https://raw.github.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+        dest: ~/.vim/colors
     - name: Download vimrc
-           become: yes
-           get_url:
-             url: https://raw.githubusercontent.com/podolyak-rs/main/master/vimrc
-             dest: ~/
-             use_proxy: yes
+      environment: "{{ proxy_env }}"
+      become: true
+      become_user: root
+      get_url:
+        use_proxy: yes 
+        url: https://raw.githubusercontent.com/podolyak-rs/main/master/vimrc
+        dest: ~/
     - name: Move vimrc to .vimrc
-        command: mv ~/vimrc ~/.vimrc
+      changed_when: false
+      command: mv ~/vimrc ~/.vimrc
